@@ -1,0 +1,276 @@
+Exercise-1
+
+mysql -uroot 
+
+Exercise-2
+
+create database decodemtl_test;
+
+Exercise-3
+
+create database decodemtl_addressbook;
+
+Exercise-4
+DROP DATABASE decodemtl_addressbook;
+
+Exercise-5
+
+SHOW DATABASES;
+USE decodemtl_addressbook;
+
+CREATE TABLE Account (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
+    phoneNumber VARCHAR (10),
+    accountDate DATETIME,
+    accountType ENUM('customer', 'friend', 'investor', 'family'),
+    description VARCHAR(100)
+);
+
+DESCRIBE Account;
+
+CREATE TABLE AddressBook (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    street VARCHAR(50),
+    city VARCHAR(50),
+    postalCode VARCHAR (10),
+    country VARCHAR (20),
+    description VARCHAR(100)
+);
+
+
+CREATE TABLE Entry (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    firstName VARCHAR(50),
+    lastName VARCHAR(50),
+    phoneNumber VARCHAR (10),
+    accountDate DATETIME,
+    accountType ENUM('customer', 'friend', 'investor', 'family'),
+    street VARCHAR(50),
+    city VARCHAR(50),
+    postalCode VARCHAR (10),
+    country VARCHAR (20),
+    emailAddress VARCHAR(100),
+    description VARCHAR(100)
+);
+
+
+CREATE TABLE test (
+    id INT AUTO_INCREMENT PRIMARY KEY
+);
+
+Exercise-6
+
+SHOW TABLES;
+
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Entry                           |
+| Test                            |
++---------------------------------+
+
+DROP TABLE Test;
+
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Entry                           |
++---------------------------------+
+
+Exercise-7
+
+SHOW TABLES;
+
++---------------------------------+
+| Tables_in_decodemtl_addressbook |
++---------------------------------+
+| Account                         |
+| AddressBook                     |
+| Entry                           |
++---------------------------------+
+
+Exercise-8
+
+ALTER TABLE Entry CHANGE COLUMN accountType type ENUM('other', 'work', 'other');
+
+mysql> DESCRIBE Entry;
++--------------+------------------------------+------+-----+---------+----------------+
+| Field        | Type                         | Null | Key | Default | Extra          |
++--------------+------------------------------+------+-----+---------+----------------+
+| id           | int(11)                      | NO   | PRI | NULL    | auto_increment |
+| firstName    | varchar(50)                  | YES  |     | NULL    |                |
+| lastName     | varchar(50)                  | YES  |     | NULL    |                |
+| phoneNumber  | varchar(10)                  | YES  |     | NULL    |                |
+| accountDate  | datetime                     | YES  |     | NULL    |                |
+| type         | enum('other','work','other') | YES  |     | NULL    |                |
+| street       | varchar(50)                  | YES  |     | NULL    |                |
+| city         | varchar(50)                  | YES  |     | NULL    |                |
+| postalCode   | varchar(10)                  | YES  |     | NULL    |                |
+| country      | varchar(20)                  | YES  |     | NULL    |                |
+| emailAddress | varchar(100)                 | YES  |     | NULL    |                |
+| description  | varchar(100)                 | YES  |     | NULL    |                |
++--------------+------------------------------+------+-----+---------+----------------+
+
+
+Exercise-9
+
+create database hatching_chick;
+USE hatching_chick;
+
+CREATE TABLE birdBrain (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Type ENUM('egg', 'chick', 'rooster', 'hen'),
+    dateOfBirth DATETIME,
+    birdStatus ENUM('alive', 'dead', 'sick', 'other')
+);
+
+INSERT INTO birdBrain (TYPE, dateOfBirth, birdStatus)
+VALUES
+    ('egg', '2017-03-12', 'dead'),
+    ('egg', '2017-01-21', 'alive'),
+    ('egg', '2017-02-04', 'alive'),
+    ('egg', '2017-01-11', 'dead'),
+    ('egg', '2017-01-21', 'dead'),
+    ('egg', '2017-04-02', 'alive'),
+    ('chick', '2017-01-25', 'alive'),
+    ('chick', '2017-03-21', 'dead'),
+    ('chick', '2017-01-13', 'alive'),
+    ('chick', '2017-02-18', 'alive'),
+    ('chick', '2017-03-12', 'dead'),
+    ('rooster', '2017-02-18', 'alive'),
+    ('rooster', '2017-02-18', 'alive'),
+    ('rooster', '2017-02-18', 'alive'),
+    ('hen', '2017-02-18', 'alive'),
+    ('hen', '2017-02-18', 'dead'),
+    ('hen', '2017-02-18', 'alive');
+
+
+SELECT birdBrain.Type, birdBrain.dateOfBirth FROM birdBrain WHERE birdStatus='alive' AND dateOfBirth <= '2017-04-10';
+
+SELECT COUNT(Type) 
+FROM birdBrain 
+WHERE birdBrain.Type='chick' 
+AND birdBrain.birdStatus='alive' 
+AND birdBrain.dateOfBirth >= CURDATE()-21;  
++-------------+
+| COUNT(Type) |
++-------------+
+|           3 |
++-------------+
+
+
+Exercise-10
+
+
+CREATE DATABASE Hotel;
+
+USE Hotel;
+
+CREATE TABLE rooms (
+
+id INT AUTO_INCREMENT PRIMARY KEY,
+RoomID INT,
+floorID INT,
+roomAvailable ENUM('yes', 'no'),
+roomCapacity INT,
+privateKitchen ENUM('yes', 'no'),
+windows INT,
+carpet ENUM('yes', 'no'),
+roomType ENUM('rental', 'gym', 'laundry', 'janitor closet', 'bathroom')
+);
+
+
+
+CREATE TABLE checkin (
+
+id INT AUTO_INCREMENT PRIMARY KEY,
+roomID INT,
+checkInDate DATETIME,
+checkOutDate DATETIME
+
+);
+
+
+INSERT INTO rooms (roomID, floorID, roomAvailable, roomCapacity, privateKitchen, windows, carpet, roomType)
+VALUES
+(1, 1, 'yes', 20, 'no', 3, 'no', 'gym'),
+(2, 2, 'no', 5, 'yes', 4, 'yes', 'rental'),
+(3, 3, 'yes', 3, 'no', 3, 'yes', 'rental'),
+(4, 4, 'no', 4, 'yes', 4, 'yes', 'rental');
+
+
+
+INSERT INTO checkin (roomID, checkInDate, checkOutDate)
+VALUES
+(1, '2017-04-06', '2017-04-09'),
+(2, '2017-03-29', '2017-04-02'),
+(3, '2017-04-02', '2017-04-09'),
+(4, '2017-04-10', '2017-04-12');
+
+
+
+SELECT * FROM rooms INNER JOIN checkin ON rooms.id = checkin.roomID;  
+
++----+--------+---------+---------------+--------------+----------------+---------+--------+----------+----+--------+---------------------+---------------------+
+| id | RoomID | floorID | roomAvailable | roomCapacity | privateKitchen | windows | carpet | roomType | id | roomID | checkInDate         | checkOutDate        |
++----+--------+---------+---------------+--------------+----------------+---------+--------+----------+----+--------+---------------------+---------------------+
+|  1 |      1 |       1 | yes           |           20 | no             |       3 | no     | gym      |  1 |      1 | 2017-04-06 00:00:00 | 2017-04-09 00:00:00 |
+|  2 |      1 |       1 | yes           |           20 | no             |       3 | no     | gym      |  2 |      2 | 2017-03-29 00:00:00 | 2017-04-02 00:00:00 |
+|  3 |      2 |       2 | no            |            5 | yes            |       4 | yes    | rental   |  3 |      3 | 2017-04-02 00:00:00 | 2017-04-09 00:00:00 |
+|  4 |      3 |       3 | yes           |            3 | no             |       3 | yes    | rental   |  4 |      4 | 2017-04-10 00:00:00 | 2017-04-12 00:00:00 |
++----+--------+---------+---------------+--------------+----------------+---------+--------+----------+----+--------+---------------------+---------------------+
+
+
+
+SELECT * FROM rooms INNER JOIN checkin ON rooms.id = checkin.roomID WHERE roomCapacity>=3;
+
+
++----+--------+---------+---------------+--------------+----------------+---------+--------+----------+----+--------+---------------------+---------------------+
+| id | RoomID | floorID | roomAvailable | roomCapacity | privateKitchen | windows | carpet | roomType | id | roomID | checkInDate         | checkOutDate        |
++----+--------+---------+---------------+--------------+----------------+---------+--------+----------+----+--------+---------------------+---------------------+
+|  1 |      1 |       1 | yes           |           20 | no             |       3 | no     | gym      |  1 |      1 | 2017-04-06 00:00:00 | 2017-04-09 00:00:00 |
+|  2 |      1 |       1 | yes           |           20 | no             |       3 | no     | gym      |  2 |      2 | 2017-03-29 00:00:00 | 2017-04-02 00:00:00 |
+|  3 |      2 |       2 | no            |            5 | yes            |       4 | yes    | rental   |  3 |      3 | 2017-04-02 00:00:00 | 2017-04-09 00:00:00 |
+|  4 |      3 |       3 | yes           |            3 | no             |       3 | yes    | rental   |  4 |      4 | 2017-04-10 00:00:00 | 2017-04-12 00:00:00 |
++----+--------+---------+---------------+--------------+----------------+---------+--------+----------+----+--------+---------------------+---------------------+
+
+
+
+SELECT COUNT(id) FROM rooms WHERE NOT roomType='rental';
+
++-----------+
+| COUNT(id) |
++-----------+
+|         2 |
++-----------+
+
+
+SELECT COUNT(id) FROM rooms WHERE privateKitchen='yes';
++-----------+
+| COUNT(id) |
++-----------+
+|         2 |
++-----------+
+
+
+SELECT AVG(windows) FROM rooms WHERE floorID=1 AND floorID=2 AND floorID=3 AND floorID=4;
+
++--------------+
+| AVG(windows) |
++--------------+
+|         NULL |
++--------------+
+
+SELECT COUNT(floorID) FROM rooms WHERE carpet = 'yes';
+
++----------------+
+| COUNT(floorID) |
++----------------+
+|              3 |
++----------------+
